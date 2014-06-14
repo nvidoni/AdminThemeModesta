@@ -4285,15 +4285,14 @@ em {
     display: block;
     float: left;
     margin: 13px 15px 0 0;
-    width: 18px;
+    width: 23px;
     height: 15px;
-    background: url(images/switch.png) 0 0 no-repeat;
+    background: url(images/panel-switch.png) 0 0 no-repeat;
     cursor: pointer;
 }
 
-.switch:hover,
 .switch.active {
-    background: url(images/switch.png) 0 -15px no-repeat;
+    background: url(images/panel-switch.png) 0 -15px no-repeat;
 }
 
 #panel {
@@ -4558,6 +4557,17 @@ body:not(.hasWireTabs) #headline .container {
 
     #navigation {
         display: none;
+    }
+
+    .switch {
+        width: 18px;
+        height: 15px;
+        background: url(images/switch.png) 0 0 no-repeat;
+    }
+
+    .switch:hover,
+    .switch.active {
+        background: url(images/switch.png) 0 -15px no-repeat;
     }
 
     #panel .content {
