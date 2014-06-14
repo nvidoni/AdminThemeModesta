@@ -8,6 +8,7 @@ class AdminThemeModesta extends AdminTheme implements Module, ConfigurableModule
 			'version' => 100,
 			'summary' => 'Modest admin theme for ProcessWire.',
             'author' => 'Nikola Vidoni',
+            'href' => 'http://modules.processwire.com/modules/admin-theme-modesta/',
             'autoload' => 'template=admin'
         );
     }
