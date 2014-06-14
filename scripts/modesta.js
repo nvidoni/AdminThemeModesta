@@ -218,7 +218,7 @@ var ProcessWireAdminTheme = {
 
                     if(active.is(':visible') && active.data('clickClose')) {
                         $.panelslider.close();
-                        $('.panel').removeClass('active');
+                        $('.switch').removeClass('active');
                     }
 
                 });
