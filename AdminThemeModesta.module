@@ -1,0 +1,161 @@
+<?php
+
+class AdminThemeModesta extends AdminTheme implements Module, ConfigurableModule {
+
+	public static function getModuleInfo() {
+        return array(
+			'title' => 'Modesta Admin Theme',
+			'version' => 100,
+			'summary' => 'Modest admin theme for ProcessWire.',
+            'author' => 'Nikola Vidoni',
+            'autoload' => 'template=admin'
+        );
+    }
+
+	public function init() {
+        parent::init();
+    }
+
+	public function ___install() {
+		parent::___install();
+	}
+
+    static public function getDefaultData() {
+        return array(
+            'modestaSitename' => 'ProcessWire CMS',
+            'modestaDate' => 1,
+            'modestaDateLocale' => 'en_US',
+            'modestaDateCodePage' => 'ISO-8859-1',
+            'modestaDateFormat' => '%A, %m/%d/%Y',
+            'modestaPageId' => 1,
+            'modestaTemplate' => 'admin|permission|role|user',
+            'modestaCreated' => 1,
+            'modestaNumCreated' => '5',
+            'modestaModified' => 1,
+            'modestaNumModified' => '5',
+            'modestaThemeName' => 1
+        );
+    }
+
+    public function __construct() {
+        foreach(self::getDefaultData() as $key => $value) {
+            $this->$key = $value;
+        }
+    }
+
+	public static function getModuleConfigInputfields(array $data) {
+
+        $inputfields = new InputfieldWrapper();
+
+        $data = array_merge(self::getDefaultData(), $data);
+
+        $field = wire('modules')->get('InputfieldText');
+        $field->name = 'modestaSitename';
+        $field->label = __('Site name');
+        $field->value = $data['modestaSitename'];
+        $field->description = __('Show your website name in the theme header.');
+
+        $inputfields->add($field);
+
+        $field = wire('modules')->get('InputfieldCheckbox');
+        $field->name = 'modestaDate';
+        $field->label = __('Show current date?');
+        $field->value = 1;
+        $field->attr('checked', empty($data['modestaDate']) ? '' : 'checked');
+        $field->description = __('Show current date in the theme header?');
+
+        $inputfields->add($field);
+
+        $field = wire('modules')->get('InputfieldText');
+        $field->showIf = "modestaDate=1";
+        $field->name = 'modestaDateLocale';
+        $field->label = __('Date locale');
+        $field->value = $data['modestaDateLocale'];
+        $field->description = __('Check [PHP setlocale](http://www.php.net/manual/en/function.setlocale.php) function reference for more information on how to set the date locale.');
+
+        $inputfields->add($field);
+
+        $field = wire('modules')->get('InputfieldText');
+        $field->showIf = "modestaDate=1";
+        $field->name = 'modestaDateCodePage';
+        $field->label = __('Date code page');
+        $field->value = $data['modestaDateCodePage'];
+        $field->notes = __('ISO-8859-1, ISO-8859-2, ISO-8859-3, ISO-8859-4, ISO-8859-5, ISO-8859-6, ISO-8859-7, ISO-8859-8, ISO-8859-9, ISO-8859-10');
+
+        $inputfields->add($field);
+
+        $field = wire('modules')->get('InputfieldText');
+        $field->showIf = "modestaDate=1";
+        $field->name = 'modestaDateFormat';
+        $field->label = __('Date format');
+        $field->value = $data['modestaDateFormat'];
+        $field->description = __('Check [PHP strftime](http://php.net/manual/en/function.strftime.php) function reference for more information on how to set the date.');
+
+        $inputfields->add($field);
+
+        $field = wire('modules')->get('InputfieldCheckbox');
+        $field->name = 'modestaPageId';
+        $field->label = __('Show page ID?');
+        $field->value = 1;
+        $field->attr('checked', empty($data['modestaPageId']) ? '' : 'checked');
+        $field->description = __('Prepend page ID before page title (only for super users).');
+
+        $inputfields->add($field);
+
+        $field = wire('modules')->get('InputfieldText');
+        $field->name = 'modestaTemplate';
+        $field->label = __('Exclude pages from slide panel');
+        $field->value = $data['modestaTemplate'];
+        $field->description = __('Exclude pages based on template name (separated by pipe character).');
+
+        $inputfields->add($field);
+
+        $field = wire('modules')->get('InputfieldCheckbox');
+        $field->name = 'modestaCreated';
+        $field->label = __('Show last created pages?');
+        $field->value = 1;
+        $field->attr('checked', empty($data['modestaCreated']) ? '' : 'checked');
+        $field->description = __('Shows last created pages in the slide panel on the left side.');
+
+        $inputfields->add($field);
+
+        $field = wire('modules')->get('InputfieldText');
+        $field->showIf = "modestaCreated=1";
+        $field->name = 'modestaNumCreated';
+        $field->label = __('Number of last created pages');
+        $field->value = $data['modestaNumCreated'];
+        $field->description = __('Number of last created pages (if number equals 0, last created pages would not be shown).');
+
+        $inputfields->add($field);
+
+        $field = wire('modules')->get('InputfieldCheckbox');
+        $field->name = 'modestaModified';
+        $field->label = __('Show last modified pages?');
+        $field->value = 1;
+        $field->attr('checked', empty($data['modestaModified']) ? '' : 'checked');
+        $field->description = __('Shows last modified pages in the slide panel on the left side.');
+
+        $inputfields->add($field);
+
+        $field = wire('modules')->get('InputfieldText');
+        $field->showIf = "modestaModified=1";
+        $field->name = 'modestaNumModified';
+        $field->label = __('Number of last modified pages');
+        $field->value = $data['modestaNumModified'];
+        $field->description = __('Number of last modified pages (if number equals 0, last modified pages would not be shown).');
+
+        $inputfields->add($field);
+
+        $field = wire('modules')->get('InputfieldCheckbox');
+        $field->name = 'modestaThemeName';
+        $field->label = __('Show admin theme name?');
+        $field->value = 1;
+        $field->attr('checked', empty($data['modestaThemeName']) ? '' : 'checked');
+        $field->description = __('Show admin theme name in the footer.');
+
+        $inputfields->add($field);
+
+        return $inputfields;
+
+    }
+}
