@@ -11,6 +11,12 @@
 
 class AdminThemeModestaHelpers extends WireData {
 
+    public function checkExtension() {
+        if(!extension_loaded('iconv')) {
+            $this->error('Warning: iconv extension is not loaded! It\'s used for date formatting in admin theme settings.');
+        }
+    }
+
 	public function __construct() {
 		$renderType = $this->input->get->admin_theme_render;
 		if($renderType && $this->wire('user')->isSuperuser()) {
@@ -76,7 +82,11 @@ class AdminThemeModestaHelpers extends WireData {
     public function renderDate() {
         if($this->wire('adminTheme')->modestaDate == 1) {
             setlocale(LC_ALL, '' . $this->wire('adminTheme')->modestaDateLocale . '');
-            return "<div class='date'>" . iconv($this->wire('adminTheme')->modestaDateCodePage, 'UTF-8', strftime($this->wire('adminTheme')->modestaDateFormat, strtotime(date("d.m.Y.")))) . "</div>";
+            if(extension_loaded("iconv")) {
+                return "<div class='date'>" . iconv($this->wire('adminTheme')->modestaDateCodePage, 'UTF-8', strftime($this->wire('adminTheme')->modestaDateFormat, strtotime(date("d.m.Y.")))) . "</div>";
+            } else {
+                return "<div class='date'>" . strftime($this->wire('adminTheme')->modestaDateFormat, strtotime(date("d.m.Y."))) . "</div>";
+            }
         }
 	}
 

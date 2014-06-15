@@ -586,6 +586,7 @@ var ProcessWireAdminTheme = {
     	$('.top').click(function(e) {
     		$('html, body').animate({scrollTop : 0},300);
     		e.preventDefault();
+            e.stopPropagation();
     	});
 
     },

@@ -2,6 +2,8 @@
 
     <div id="wrapper">
 
+        <?php echo $helpers->checkExtension(); ?>
+
     	<?php echo $helpers->renderAdminNotices($notices); ?>
 
         <!-- Header -->
