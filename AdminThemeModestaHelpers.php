@@ -266,6 +266,18 @@ class AdminThemeModestaHelpers extends WireData {
 		return $out; 
 	}
 
+    public function getPageIcon(Page $p) {
+		$icon = '';
+		if($p->template == 'admin') {
+			$info = $this->wire('modules')->getModuleInfo($p->process, array('verbose' => false));
+			if(!empty($info['icon'])) $icon = $info['icon'];
+		}
+		if($p->page_icon) $icon = $p->page_icon; // allow for option of an admin field overriding the module icon
+		if(!$icon && $p->parent->id != $this->wire('config')->adminRootPageID) $icon = 'file-o ui-priority-secondary';
+		if($icon) $icon = "<i class='fa fa-fw fa-$icon'></i>&nbsp;";
+		return $icon;
+	}
+
     /**
 	 * Render a single top navigation item for the given page
 	 *
@@ -280,7 +292,7 @@ class AdminThemeModestaHelpers extends WireData {
 
 		$isSuperuser = $this->wire('user')->isSuperuser();
 		$showItem = $isSuperuser;
-		$children = $page->numChildren && !$level && $page->name != 'page' ? $page->children("check_access=0") : array();
+		$children = $page->numChildren && !$level ? $page->children("check_access=0") : array();
 		$adminURL = $this->wire('config')->urls->admin;
 
         $out = '';
@@ -295,6 +307,8 @@ class AdminThemeModestaHelpers extends WireData {
 			}
 		}
 
+        if($page->name == 'page' && count($children) == 1) $children = array();
+
 		if(!$showItem) return '';
 
 		$class = strpos(wire('page')->path, $page->path) === 0 ? 'active' : '';
@@ -307,16 +321,16 @@ class AdminThemeModestaHelpers extends WireData {
 			$class = trim("$class dropdown-toggle");
 			$out .= "<a href='$page->url' class='$class'>$title</a>";
 			$my = 'left-1 top';
-			if($page->name == 'access') $my = 'left top';
+			if(in_array($page->name, array('access', 'page'))) $my = 'left top';
 			$out .= "<ul class='dropdown-menu dropdown-main' data-my='$my' data-at='left bottom'>";
 
 			foreach($children as $child) {
 
 				if($isSuperuser && ($child->id == 11 || $child->id == 16)) {
 					// has ajax items
-
+                    $icon = $this->getPageIcon($child);
 					$addLabel = $this->_('Add New');
-					$out .=	"<li><a class='has-ajax-items' data-from='topnav-page-$page' href='$child->url'>" . $this->_($child->title) . "</a><ul>" .
+					$out .=	"<li><a class='has-ajax-items' data-from='topnav-page-$page' href='$child->url'>$icon" . $this->_($child->title) . "</a><ul>" .
 						"<li><a class='add' href='{$child->url}add'><i class='fa fa-plus-circle'></i> $addLabel</a></li>" .
 						"</ul></li>";
 				} else {
@@ -328,7 +342,10 @@ class AdminThemeModestaHelpers extends WireData {
 
 		} else {
 			$class = $class ? " class='$class'" : '';
-			$out .= "<a href='$page->url'$class>$title</a>";
+            $url = $page->url;
+			$icon = $level > 0 ? $this->getPageIcon($page) : '';
+            if(strpos($url, '/page/list/') !== false) $url = str_replace('/page/list/', '/page/', $url);
+			$out .= "<a href='$page->url'$class>$icon$title</a>";
 		}
 
 		$out .= "</li>";
