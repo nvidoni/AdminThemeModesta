@@ -4520,7 +4520,6 @@ body.modal.hasWireTabs #breadcrumbs li {
 }
 
 body.modal.hasWireTabs #breadcrumbs li.title {
-      /* display only title in modal mode */
     display: block;
 }
 
