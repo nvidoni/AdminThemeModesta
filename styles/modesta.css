@@ -2279,6 +2279,9 @@ input[type=file] {
     background: none;
     border: none;
     font-size: 12px;
+    -moz-box-shadow: none;
+   -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 textarea,
@@ -3468,6 +3471,7 @@ li.action {
 li.action a, .content .actions a,
 .PageList .actions a,
 .PageListMoveNote a {
+    background: #fff;
     color: #2a3037;
     padding: 6px 10px;
     display: inline-block;
@@ -4106,7 +4110,7 @@ em {
 }
 
 .description {
-    color: #898d90;
+    color: #898d90 !important;
     margin: 0 8px;
 }
 
@@ -4197,6 +4201,18 @@ em {
 #content .container > .ui-helper-clearfix > form {
     position: relative;
     top: -1px;
+}
+
+#content .container > form p {
+    color: #2a3037;
+}
+
+#content .container > form span.description {
+    display: block;
+    margin: 10px 0;
+    padding: 8px 10px;
+    background: #fff;
+    border: 1px solid #d8dadd;
 }
 
 .content img {
@@ -4520,6 +4536,7 @@ body.modal.hasWireTabs #breadcrumbs li {
 }
 
 body.modal.hasWireTabs #breadcrumbs li.title {
+      /* display only title in modal mode */
     display: block;
 }
 
