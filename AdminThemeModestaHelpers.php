@@ -39,6 +39,18 @@ class AdminThemeModestaHelpers extends WireData {
         }
     }
 
+
+	/**
+	 * Pass through color value
+	 *
+	 * @return string
+	 *
+	 */
+	public function renderThemeColor() {
+		return $this->wire('adminTheme')->modestaThemeColor;
+
+	}
+
 	/**
 	 * Perform a translation, based on text from shared admin file: /wire/templates-admin/default.php
 	 * 
