@@ -43,6 +43,44 @@ $helpers = new AdminThemeModestaHelpers();
 
 	<?php foreach($config->scripts as $file) echo "\n\t<script type='text/javascript' src='$file'></script>"; ?>
 
+    <style>
+
+        /* Overrides of Modesta standard blue style */
+
+        a,
+        #breadcrumbs ul li.title,
+        #title .id span,
+        #content .WireTabs #_ProcessPageEditView,
+        .Inputfields .InputfieldHeader,
+        .content .AdminDataList td a,
+        .PageList .PageListItemOpen > a.PageListPage,
+        .content .nav dt a {
+            color: <?php echo $helpers->renderThemeColor(); ?>;
+        }
+
+        #navigation,
+        .content li.ui-state-default,
+        .content .ui-widget-content li.ui-state-default {
+        	background: <?php echo $helpers->renderThemeColor(); ?>;
+        }
+
+        #navigation ul li a:hover,
+        #navigation ul li a.hover {
+        	background: rgba(255,255,255,0.4);
+        }
+
+        #navigation ul li a,
+        #navigation ul li:last-child a {
+        	border-color: rgba(255,255,255,0.2);
+        }
+
+        .content li.ui-state-default,
+        .content .ui-widget-content li.ui-state-default {
+        	border-color: <?php echo $helpers->renderThemeColor(); ?>;
+        }
+
+	</style>
+
 </head>
 
 <?php

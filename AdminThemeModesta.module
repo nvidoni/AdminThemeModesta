@@ -156,6 +156,14 @@ class AdminThemeModesta extends AdminTheme implements Module, ConfigurableModule
 
         $inputfields->add($field);
 
+        $field = wire('modules')->get('InputfieldText');
+        $field->name = 'modestaThemeColor';
+        $field->label = __('Modesta main color');
+        $field->value = $data['modestaThemeColor'];
+        $field->description = __('Please use hex value. Defaults to blue');
+
+        $inputfields->add($field);
+
         return $inputfields;
 
     }
