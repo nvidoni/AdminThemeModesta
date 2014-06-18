@@ -2,6 +2,8 @@
 
 Modest admin theme for ProcessWire.
 
+### Development version (ProcessWire >= 2.4.4)
+
 ![Screenshot](https://raw.github.com/nvidoni/AdminThemeModesta/master/screenshot.jpg)
 
 ## How to install

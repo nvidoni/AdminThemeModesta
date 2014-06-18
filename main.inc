@@ -57,7 +57,11 @@
 
         </div>
 
-        <?php if(in_array($page->id, array(2,3,8))) echo $helpers->renderAdminShortcuts(); ?>
+        <?php
+        if($page->process == 'ProcessPageList' || ($page->name == 'lister' && $page->parent->name == 'page')) {
+            echo $helpers->renderAdminShortcuts();
+        }
+        ?>
 
         <!-- Title -->
 

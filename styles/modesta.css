@@ -2007,7 +2007,7 @@ div + a > .ui-button {
     border-top: none;
 }
 
-.ui-menu .ui-menu-item:first-child a i {
+.ui-menu .ui-menu-item a i {
     margin: 0 5px 0 0;
 }
 
@@ -2027,10 +2027,6 @@ div + a > .ui-button {
 }
 
 .ui-menu .ui-menu-item .ui-menu {
-}
-
-.ui-menu .ui-menu-item .ui-menu .ui-menu-item {
-
 }
 
 .ui-menu .ui-menu-item .ui-menu .ui-menu-item a {
@@ -2101,7 +2097,7 @@ div + a > .ui-button {
 }
 
 .dropdown-menu .ui-menu-item {
-    min-width: 160px;
+    min-width: 158px;
     border: 0 !important;
 }
 
@@ -3130,6 +3126,7 @@ select {
 #navigation ul li a.active {
     background: #fff;
     color: #2b2b2b;
+    border-left: 1px solid #fff;
 }
 
 /* Breadcrumbs
@@ -3398,6 +3395,11 @@ body.modal #head_button {
     color: #2a3037;
 }
 
+#content .WireTabs #_ProcessListerRefreshTab i,
+#content .WireTabs #_ProcessListerResetTab i {
+    opacity: 1;
+}
+
 /**
  * PageList content
  *
@@ -3646,6 +3648,55 @@ li.action a:hover,
 
 .PageListPagination a {
     margin-bottom: 5px;
+}
+
+#ProcessLister {
+	margin-top: 0;
+}
+
+#ProcessLister #ProcessListerFiltersForm .Inputfields .InputfieldContent {
+	padding-bottom: 25px;
+}
+
+#ProcessListerResultsTab {
+	padding-top: 0;
+}
+
+#ProcessLister .selector-list {
+    margin: 0 0 5px 0;
+    padding: 0 0 15px 0;
+}
+
+#ProcessLister .selector-list .selector-row {
+    margin: 0;
+    padding: 15px 0;
+}
+
+#ProcessLister .selector-add {
+    color: #2a3037;
+    padding: 6px 10px;
+    font: 10px/10px Arial, sans-serif;
+    border: 1px solid #d8dadd !important;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#ProcessLister .selector-add:hover {
+    color: #fff;
+    background: #55b048;
+    border: 1px solid #55b048 !important;
+}
+
+#ProcessLister .selector-add i {
+    display: none;
+}
+
+#ProcessLister .delete-row i {
+    color: #2f87c1;
+}
+
+#ProcessLister .delete-row i:hover {
+    color: #2a3037;
 }
 
 #ProcessPageEditLinkForm .PageListRoot {
@@ -4174,6 +4225,10 @@ em {
     color: #2a3037;
 }
 
+.InputfieldContent h2 {
+    margin: 15px 0 !important;
+}
+
 .content h2 a:hover {
     color: white;
     background: #b50e60;
@@ -4212,6 +4267,17 @@ em {
 
 .content .nav dt a:hover {
     color: #2a3037;
+}
+
+.content .nav dt a i {
+    margin: 10px 0 0 0;
+    font-size: 16px;
+    color: #d8dadd !important;
+    opacity: 1;
+}
+
+.content .nav dt a i:hover {
+    color: #2a3037 !important;
 }
 
 .content .nav dd {

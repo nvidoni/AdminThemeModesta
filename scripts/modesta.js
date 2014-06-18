@@ -365,7 +365,7 @@ var ProcessWireAdminTheme = {
 			minLength: 2,
 			position: { my : "right top", at: "right bottom" },
 			source: function(request, response) {
-				var url = $input.parents('form').attr('action') + 'for?get=template_label,title&include=all&admin_search=' + request.term;
+				var url = $input.parents('form').attr('data-action') + 'for?get=template_label,title&include=all&admin_search=' + request.term;
 				$.getJSON(url, function(data) {
 					response($.map(data.matches, function(item) {
 						return {
@@ -601,6 +601,14 @@ var ProcessWireAdminTheme = {
 
         $('body.login .InputfieldHeader').click(function() {
             return false;
+        });
+
+        $("i.fa-cubes").each(function() {
+            $("i.fa-cubes").removeClass('fa-cubes').addClass('fa-columns');
+        });
+
+        $("i.fa-cube").each(function() {
+            $("i.fa-cube").removeClass('fa-cube').addClass('fa-tasks');
         });
 
 	},
