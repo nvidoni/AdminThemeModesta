@@ -1826,7 +1826,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 #notices .ui-state-error a {
-    color: white;
+    color: #fff;
 }
 
 #notices .ui-state-highlight .ui-icon,
@@ -2431,6 +2431,13 @@ select {
 
 .Inputfields .Inputfield p.notes {
     margin-bottom: 0;
+}
+
+.Inputfields .InputfieldContent .ui-state-error {
+    padding: 0;
+    width: 100%;
+    color: #dd4646;
+    background: none;
 }
 
 .Inputfields .Inputfield.ui-state-error {
