@@ -127,6 +127,44 @@ class AdminThemeModestaHelpers extends WireData {
 	}
 
     /**
+	 * Render unpublished pages counter
+	 *
+	 * @return string
+	 *
+	 */
+    public function renderCounter() {
+        if($this->wire('adminTheme')->modestaUnpublished == 1) {
+            $pages = $this->wire('pages')->find('status=unpublished');
+            $out = '';
+            if($pages->getTotal() > 0) {
+                $out .= '<a class="counter">' . $pages->getTotal() .'</a>';
+            }
+            return $out;
+        }
+    }
+
+    /**
+	 * Render unpublished pages
+	 *
+	 * @return string
+	 *
+	 */
+    public function renderUnpublished() {
+        if($this->wire('adminTheme')->modestaUnpublished == 1) {
+            $pages = $this->wire('pages')->find('status=unpublished');
+            if($pages->getTotal() > 0) {
+                $out = '<ul class="list">';
+                foreach($pages as $page) {
+                    $out .= '
+                        <li><a class="tooltip" href="' . $this->wire('config')->urls->admin . 'page/edit/?id=' . $page->id .'"  title="' . iconv($this->wire('adminTheme')->modestaDateCodePage, 'UTF-8', strftime($this->wire('adminTheme')->modestaDateFormat, $page->created)) . '">' . $page->title . '</a><a class="edit" href="' . $this->wire('config')->urls->admin . 'page/edit/?id=' . $page->id .'">Edit</a></li>';
+                }
+                $out .= '</ul>';
+            }
+            return $out;
+        }
+    }
+
+    /**
 	 * Get user IP address
 	 *
 	 * @return string
