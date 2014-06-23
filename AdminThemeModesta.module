@@ -5,7 +5,7 @@ class AdminThemeModesta extends AdminTheme implements Module, ConfigurableModule
 	public static function getModuleInfo() {
         return array(
 			'title' => 'Modesta Admin Theme',
-			'version' => 100,
+			'version' => 101,
 			'summary' => 'Modest admin theme for ProcessWire.',
             'author' => 'Nikola Vidoni',
             'href' => 'http://modules.processwire.com/modules/admin-theme-modesta/',
@@ -28,6 +28,7 @@ class AdminThemeModesta extends AdminTheme implements Module, ConfigurableModule
             'modestaDateLocale' => 'en_US',
             'modestaDateCodePage' => 'ISO-8859-1',
             'modestaDateFormat' => '%A, %m/%d/%Y',
+            'modestaUnpublished' => 1,
             'modestaPageId' => 1,
             'modestaTemplate' => 'admin|permission|role|user',
             'modestaCreated' => 1,
@@ -91,6 +92,15 @@ class AdminThemeModesta extends AdminTheme implements Module, ConfigurableModule
         $field->label = __('Date format');
         $field->value = $data['modestaDateFormat'];
         $field->description = __('Check [PHP strftime](http://php.net/manual/en/function.strftime.php) function reference for more information on how to set the date.');
+
+        $inputfields->add($field);
+
+        $field = wire('modules')->get('InputfieldCheckbox');
+        $field->name = 'modestaUnpublished';
+        $field->label = __('Show unpublished pages?');
+        $field->value = 1;
+        $field->attr('checked', empty($data['modestaUnpublished']) ? '' : 'checked');
+        $field->description = __('Shows unpublished pages count and triggers modal window with unpublished pages list.');
 
         $inputfields->add($field);
 
