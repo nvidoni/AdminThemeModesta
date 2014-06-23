@@ -1,6 +1,6 @@
 # AdminThemeModesta
 
-Modest admin theme for ProcessWire.
+Modest admin theme for ProcessWire. Version 1.0.1
 
 ![Screenshot](https://raw.github.com/nvidoni/AdminThemeModesta/master/screenshot.jpg)
 
@@ -30,6 +30,10 @@ Modest admin theme for ProcessWire.
 ### Date format
 
 - Sets date format using PHP strftime function
+
+### Show unpublished pages
+
+- Shows unpublished pages count (next to username) and triggers modal window with unpublished pages list.
 
 ### Show page ID
 
