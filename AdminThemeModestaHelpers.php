@@ -142,7 +142,7 @@ class AdminThemeModestaHelpers extends WireData {
                 }
             }
             $out = '';
-            if($pages->getTotal() > 0) {
+            if($counter > 0) {
                 $out .= '<a class="counter">' . $counter .'</a>';
             }
             return $out;
@@ -158,6 +158,7 @@ class AdminThemeModestaHelpers extends WireData {
     public function renderUnpublished() {
         if($this->wire('adminTheme')->modestaUnpublished == 1) {
             $pages = $this->wire('pages')->find('status=unpublished');
+            $out = '';
             if($pages->getTotal() > 0) {
                 $out = '<ul class="list">';
                 foreach($pages as $page) {
