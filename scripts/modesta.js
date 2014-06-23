@@ -5,6 +5,8 @@ var ProcessWireAdminTheme = {
 		var $button = $("#head_button > button.dropdown-toggle").hide();
 
         this.setupPanel();
+        this.setupModal();
+        this.setupPagination();
         this.setupThumbs();
         this.setupCloneButton();
 		this.setupButtonStates();
@@ -240,6 +242,226 @@ var ProcessWireAdminTheme = {
 
     },
 
+    setupModal: function() {
+
+        $.fn.modality = function(options) {
+    		var defaults = {
+    			animation: 'slide',
+    			animationspeed: 250,
+    			overlayClose: true,
+    			escClose: true,
+    			closeModalClass: 'modality-close'
+    		};
+
+    		var options = $.extend({}, defaults, options);
+
+    		return this.each(function() {
+    			var modal = $(this),
+    				topMeasure = parseInt(modal.css('top')),
+    				topOffset = modal.height() + topMeasure,
+    				locked = false,
+    				marginLeft = Math.round(modal.outerWidth() / -2);
+
+
+                modalOverlay = $('<div class="modality-overlay" />').insertAfter(modal);
+
+    			modal.bind('modality:open', function() {
+    				modalOverlay.unbind('click.modalEvent');
+    				$('.' + options.closeModalClass).unbind('click.modalEvent');
+    				if (!locked) {
+    					lockModal();
+    					if (options.animation == "slide") {
+    						modal.css({
+    							'top': $(document).scrollTop() - topOffset,
+    							'opacity': 0,
+    							'display': 'block',
+    							'margin-left': marginLeft
+    						});
+    						modalOverlay.fadeIn(options.animationspeed / 2);
+    						modal.delay(options.animationspeed / 2).animate({
+    							"top": $(document).scrollTop() + topMeasure + 'px',
+    							"opacity": 1
+    						}, options.animationspeed, unlockModal());
+    					}
+    					if (options.animation == "fade") {
+    						modal.css({
+    							'opacity': 0,
+    							'display': 'block',
+    							'top': $(document).scrollTop() + topMeasure,
+    							'margin-left': marginLeft
+    						});
+    						modalOverlay.fadeIn(options.animationspeed / 2);
+    						modal.delay(options.animationspeed / 2).animate({
+    							"opacity": 1
+    						}, options.animationspeed, unlockModal());
+    					}
+    					if (options.animation == "none") {
+    						modal.css({
+    							'display': 'block',
+    							'top': $(document).scrollTop() + topMeasure,
+    							'margin-left': marginLeft
+    						});
+    						modalOverlay.css({
+    							"display": "block"
+    						});
+    						unlockModal()
+    					}
+    				}
+    				modal.unbind('modality:open');
+    			});
+
+    			modal.bind('modality:close', function() {
+    				if (!locked) {
+    					lockModal();
+    					if (options.animation == "slide") {
+    						modalOverlay.delay(options.animationspeed).fadeOut(options.animationspeed);
+    						modal.animate({
+    							"top": $(document).scrollTop() - topOffset + 'px',
+    							"opacity": 0
+    						}, options.animationspeed / 2, function() {
+    							modal.css({
+    								'top': topMeasure,
+    								'opacity': 1,
+    								'display': 'none'
+    							});
+    							unlockModal();
+    						});
+    					}
+    					if (options.animation == "fade") {
+    						modalOverlay.delay(options.animationspeed).fadeOut(options.animationspeed);
+    						modal.animate({
+    							"opacity": 0
+    						}, options.animationspeed, function() {
+    							modal.css({
+    								'opacity': 1,
+    								'display': 'none',
+    								'top': topMeasure
+    							});
+    							unlockModal();
+    						});
+    					}
+    					if (options.animation == "none") {
+    						modal.css({
+    							'display': 'none',
+    							'top': topMeasure
+    						});
+    						modalOverlay.css({
+    							'display': 'none'
+    						});
+    					}
+    				}
+    				modal.unbind('modality:close');
+    			});
+
+    			modal.trigger('modality:open')
+    			var closeButton = $('.' + options.closeModalClass).bind('click.modalEvent', function(e) {
+    				modal.trigger('modality:close')
+                    e.preventDefault();
+    			});
+
+    			if (options.overlayClose) {
+    				modalOverlay.bind('click.modalEvent', function() {
+    					modal.trigger('modality:close')
+    				});
+    			}
+
+    			if (options.escClose) {
+    				$('body').keyup(function(e) {
+    					if (e.which === 27) {
+    						modal.trigger('modality:close');
+    					}
+    				});
+    			}
+
+    			function unlockModal() {
+    				locked = false;
+    			}
+
+    			function lockModal() {
+    				locked = true;
+    			}
+    		});
+    	}
+
+        $('.counter').click(function(e) {
+            $('#unpublished').modality();
+            e.stopPropagation();
+        });
+
+    },
+
+    setupPagination: function() {
+
+        $.fn.pagination = function(options) {
+
+    		var defaults = {
+    			pageSize: 10,
+    			currentPage: 1,
+    		};
+
+    		var options = $.extend(defaults, options);
+
+    		return this.each(function() {
+
+    			var selector = $(this);
+                var pageCounter = 1;
+
+    			selector.wrap("<div class='MarkupPager'></div>");
+
+    			selector.children().each(function(i) {
+
+    				if(i < pageCounter * options.pageSize && i >= (pageCounter-1) * options.pageSize) {
+    				    $(this).addClass("MarkupPagerItem-" + pageCounter);
+    				}
+    				else {
+    					$(this).addClass("MarkupPagerItem-" + (pageCounter + 1));
+    					pageCounter ++;
+    				}
+
+    			});
+
+    			selector.children().hide();
+    			selector.children(".MarkupPagerItem-" + options.currentPage).show();
+
+    			if(pageCounter <= 1) {
+    				return;
+    			}
+
+    			var pageNav = "<ul class='MarkupPagerNav'>";
+
+                for (i = 1; i <= pageCounter; i++){
+    				if (i == options.currentPage) {
+    					pageNav += "<li class='MarkupPagerNavOn MarkupPagerNavItem-" + i + "'><a rel='" + i + "' href='#'>" + i + "</a></li>";
+    				}
+    				else {
+    					pageNav += "<li class='MarkupPagerNavItem-" + i + "'><a rel='" + i + "' href='#'>" + i + "</a></li>";
+    				}
+    			}
+    			pageNav += "</ul>";
+
+                selector.after(pageNav);
+
+    			selector.parent().find(".MarkupPagerNav a").click(function() {
+
+    				var clickedLink = $(this).attr("rel");
+    				options.currentPage = clickedLink;
+
+                    $(this).parent("li").parent("ul").parent(".MarkupPagerNav").find("li.MarkupPagerNavOn").removeClass("MarkupPagerNavOn");
+                    $(this).parent("li").parent("ul").parent(".MarkupPagerNav").find("a[rel='"+clickedLink+"']").parent("li").addClass("MarkupPagerNavOn");
+
+    				selector.children().hide();
+    				selector.find(".MarkupPagerItem-" + clickedLink).show();
+
+    				return false;
+
+                });
+    		});
+    	}
+
+        $(".list").pagination();
+
+    },
+
 	setupTooltips: function() {
 
         $.fn.tooltips = function() {
@@ -272,11 +494,7 @@ var ProcessWireAdminTheme = {
 
         };
 
-        $("a.tooltip").tooltips().hover(function() {
-            $(this).addClass('ui-state-hover');
-        }, function() {
-            $(this).removeClass('ui-state-hover');
-        });
+        $("a.tooltip").tooltips();
 
 	},
 
