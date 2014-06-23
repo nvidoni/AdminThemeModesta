@@ -19,13 +19,21 @@
                 <?php echo $helpers->renderDate(); ?>
 
                 <ul class="info">
-                    <li><?php echo "<span>{$user->name}</span>"; ?></li>
+                    <li><?php echo "<span>" . $user->name . "</span>" . $helpers->renderCounter(); ?></li>
                     <?php if($user->hasPermission('profile-edit')) { ?>
                     <li><i class="fa fa-cog"></i><a href='<?php echo $config->urls->admin; ?>profile/'><?php echo $helpers->_('Profile'); ?></a></li>
                     <li><i class="fa fa-globe"></i><a href='<?php echo $config->urls->root; ?>'><?php echo $helpers->_('View Site'); ?></a></li>
                     <?php } ?>
                     <li><i class="fa fa-arrow-circle-right"></i><a href='<?php echo $config->urls->admin; ?>login/logout/'><?php echo $helpers->_('Logout'); ?></a></li>
                 </ul>
+
+                <div id="unpublished" class="modality">
+                    <div class="content">
+                    <h1><?php echo $helpers->_('Unpublished pages'); ?></h1>
+                    <?php echo $helpers->renderUnpublished(); ?>
+                	<div class="modality-close"></div>
+                    </div>
+                </div>
 
     		</div>
 
