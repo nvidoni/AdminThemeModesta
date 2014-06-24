@@ -2621,14 +2621,14 @@ select {
 .Inputfields .InputfieldItemList .InputfieldItemHeader {
     border: none;
     background: #2a3037;
-    color: white;
+    color: #fff !important;
     padding: 6px 5px 6px 10px;
     cursor: move;
     font-weight: normal;
 }
 
 .Inputfields .InputfieldItemList .InputfieldItemHeader a {
-    color: #fff;
+    color: #fff !important;
 }
 
 .Inputfields .InputfieldItemList .InputfieldItemHeader:hover {
@@ -2903,8 +2903,12 @@ select {
     clear: left;
 }
 
-.Inputfield .LanguageSupport {
-    margin-bottom: 1em;
+.Inputfields .Inputfield .LanguageSupport {
+    margin-bottom: 10px;
+}
+
+.Inputfields .Inputfield .InputfieldFileLanguageInfo {
+    margin: 5px 0 0 0;
 }
 
 /****************************************************************************
@@ -4252,7 +4256,7 @@ em {
     top: -1px;
 }
 
-#content .container > form p {
+#content .container > .InputfieldForm p {
     color: #2a3037;
 }
 
